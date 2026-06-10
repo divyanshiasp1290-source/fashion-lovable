@@ -2,14 +2,9 @@
   "version": 2,
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "installCommand": "npm install",
-  "framework": "react-router"
-
-
-
-
-
+  "installCommand": "npm install"
 }
+
 
 
 
