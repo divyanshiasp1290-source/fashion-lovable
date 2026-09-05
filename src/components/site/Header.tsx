@@ -30,6 +30,8 @@ export function Header({ transparent }: { transparent?: boolean }) {
 
   return (
     <header
+      data-site-header
+      data-header-solid={scrolled || megaOpen || alwaysSolid ? "true" : "false"}
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
         scrolled || megaOpen || alwaysSolid
           ? "bg-ivory text-ink border-b border-border"

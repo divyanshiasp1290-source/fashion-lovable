@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { HeroCursor } from "@/components/experience/HeroCursor";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { CartDrawer } from "./CartDrawer";
@@ -16,6 +17,7 @@ export function SiteLayout({
       <main className="flex-1">{children}</main>
       <Footer />
       <CartDrawer />
+      <HeroCursor />
     </div>
   );
 }
