@@ -83,6 +83,14 @@
   --border: oklch(0.85 0.012 75);
   --input: oklch(0.85 0.012 75);
   --ring: var(--ink);
+
+  --house-ink: var(--ink);
+  --house-paper: var(--ivory);
+  --house-line: color-mix(in oklab, var(--ink) 74%, transparent);
+  --house-rule: color-mix(in oklab, var(--ink) 14%, transparent);
+  --house-mark-speed: 360ms;
+  --house-plate-speed: 440ms;
+  --house-ease: cubic-bezier(0.22, 0.68, 0.2, 1);
 }
 
 .dark {
@@ -201,4 +209,347 @@
 
 @utility reveal {
   animation: reveal-up 1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+[data-custom-cursor="true"] {
+  cursor: none;
+}
+
+[data-custom-cursor="true"] a,
+[data-custom-cursor="true"] button,
+[data-custom-cursor="true"] input,
+[data-custom-cursor="true"] textarea,
+[data-custom-cursor="true"] select {
+  cursor: pointer;
+}
+
+html[data-silk-cursor="custom"],
+html[data-silk-cursor="custom"] * {
+  cursor: none !important;
+}
+
+html[data-silk-cursor="custom"] input,
+html[data-silk-cursor="custom"] textarea,
+html[data-silk-cursor="custom"] select,
+html[data-silk-cursor="custom"] option,
+html[data-silk-cursor="custom"] [contenteditable="true"] {
+  cursor: auto !important;
+}
+
+.silk-cursor-mark {
+  width: 22px;
+  height: 22px;
+  will-change: transform;
+}
+
+.silk-cursor-ring {
+  position: absolute;
+  inset: 4px;
+  border: 1px solid color-mix(in oklab, var(--ink) 38%, transparent);
+  border-radius: 999px;
+  transition:
+    inset 200ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    opacity 200ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 200ms ease;
+  opacity: 0.55;
+}
+
+.silk-cursor-mark[data-ink="true"] .silk-cursor-ring {
+  border-color: color-mix(in oklab, var(--ivory) 55%, transparent);
+}
+
+.silk-cursor-mark[data-hover="true"] .silk-cursor-ring {
+  inset: 1px;
+  opacity: 0.9;
+}
+
+.silk-cursor-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  height: 2px;
+  background: var(--ink);
+  transform: translate(-50%, -50%);
+}
+
+.silk-cursor-mark[data-ink="true"] .silk-cursor-dot,
+.silk-cursor-mark[data-ink="true"] .silk-cursor-hair {
+  background: var(--ivory);
+}
+
+.silk-cursor-hair {
+  position: absolute;
+  background: color-mix(in oklab, var(--ink) 58%, transparent);
+}
+
+.silk-cursor-hair-n {
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 5px;
+  transform: translateX(-50%);
+}
+
+.silk-cursor-hair-s {
+  left: 50%;
+  bottom: 0;
+  width: 1px;
+  height: 5px;
+  transform: translateX(-50%);
+}
+
+.silk-cursor-hair-w {
+  top: 50%;
+  left: 0;
+  height: 1px;
+  width: 5px;
+  transform: translateY(-50%);
+}
+
+.silk-cursor-hair-e {
+  top: 50%;
+  right: 0;
+  height: 1px;
+  width: 5px;
+  transform: translateY(-50%);
+}
+
+.silk-cursor-glow {
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--champagne) 22%, transparent) 0%,
+    transparent 70%
+  );
+  will-change: transform, opacity;
+}
+
+.silk-cursor-glow[data-ink="true"] {
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--champagne) 28%, transparent) 0%,
+    transparent 72%
+  );
+}
+
+.silk-cursor-label {
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  font-weight: 400;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink);
+  white-space: nowrap;
+  will-change: transform, opacity;
+}
+
+.silk-cursor-label[data-ink="true"] {
+  color: var(--ivory);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+
+  [data-custom-cursor="true"] {
+    cursor: auto;
+  }
+
+  html[data-silk-cursor="custom"],
+  html[data-silk-cursor="custom"] * {
+    cursor: auto !important;
+  }
+}
+
+body[data-hero-tone="atelier"] [data-site-header][data-header-solid="false"] {
+  color: var(--ink);
+}
+
+.look-aperture {
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--ink) 8%, transparent);
+}
+
+.image-plate {
+  position: relative;
+  overflow: hidden;
+  background: var(--bone);
+}
+
+.image-plate-stage {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.image-plate-primary,
+.image-plate-secondary {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.image-plate-primary {
+  transform: scale(1.018);
+  transition: transform var(--house-plate-speed) var(--house-ease);
+}
+
+.image-plate-secondary {
+  clip-path: inset(0 100% 0 0);
+  transform: scale(1.04);
+  transition:
+    clip-path var(--house-plate-speed) var(--house-ease),
+    transform var(--house-plate-speed) var(--house-ease);
+}
+
+.image-plate-mark {
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+  color: var(--house-paper);
+  filter: drop-shadow(0 0 0.6px color-mix(in oklab, var(--house-ink) 55%, transparent));
+  opacity: 0;
+  transition: opacity var(--house-mark-speed) var(--house-ease);
+}
+
+.image-plate-mark-frame {
+  inset: 11px;
+}
+
+.image-plate-mark-frame .house-mark {
+  height: 100%;
+  width: 100%;
+}
+
+.image-plate-mark-line {
+  left: 12px;
+  top: 14px;
+  width: 46%;
+}
+
+.image-plate-mark-arrow {
+  right: 12px;
+  bottom: 14px;
+  width: 22%;
+}
+
+.image-plate-mark-figure {
+  bottom: 2px;
+  left: 6px;
+  width: 17%;
+}
+
+.image-plate-mark-circle {
+  right: 12px;
+  top: 12px;
+  width: 15%;
+}
+
+.house-mark-animated path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset var(--house-mark-speed) var(--house-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .image-plate-live .image-plate-primary {
+    transform: scale(1.05);
+  }
+
+  .group:hover .image-plate-live .image-plate-secondary {
+    clip-path: inset(0 0 0 0);
+    transform: scale(1);
+  }
+
+  .group:hover .image-plate-live .image-plate-mark {
+    opacity: 1;
+  }
+
+  .group:hover .image-plate-live .house-mark-animated path {
+    stroke-dashoffset: 0;
+  }
+}
+
+.image-plate-static .image-plate-primary,
+.image-plate-static .image-plate-secondary {
+  transition: none;
+  transform: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .image-plate-static.image-plate-live .image-plate-secondary {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.image-plate-reveal .image-plate-primary {
+  transition:
+    clip-path 0.7s var(--house-ease),
+    transform 0.7s var(--house-ease);
+}
+
+.image-plate-reveal.image-plate-pending .image-plate-primary {
+  clip-path: inset(0 0 22% 0);
+  transform: scale(1.048);
+}
+
+.image-plate-reveal.image-plate-shown .image-plate-primary {
+  clip-path: inset(0);
+  transform: none;
+}
+
+.image-plate-mark-inview .image-plate-mark {
+  opacity: 0;
+}
+
+.image-plate-shown.image-plate-mark-inview .image-plate-mark {
+  opacity: 1;
+}
+
+.image-plate-shown.image-plate-mark-inview .house-mark-animated path {
+  stroke-dashoffset: 0;
+}
+
+.image-plate-tone-ink .image-plate-mark {
+  color: var(--house-ink);
+  filter: none;
+}
+
+.look-note {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--ink) 48%, transparent);
+}
+
+.look-footnote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.35;
+  color: var(--shadow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image-plate-primary,
+  .image-plate-secondary,
+  .image-plate-mark,
+  .house-mark-animated path {
+    transition: none;
+  }
+
+  .house-mark-animated path {
+    stroke-dashoffset: 0;
+  }
+
+  .image-plate-reveal.image-plate-pending .image-plate-primary,
+  .image-plate-reveal.image-plate-shown .image-plate-primary {
+    clip-path: none;
+    transform: none;
+  }
 }

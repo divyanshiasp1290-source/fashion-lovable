@@ -1,6 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { motion } from "framer-motion";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ImagePlate } from "@/components/site/ImagePlate";
 import { SiteLayout } from "@/components/site/Layout";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { images } from "@/lib/products";
 
 export const Route = createFileRoute("/about")({
@@ -20,35 +21,44 @@ export const Route = createFileRoute("/about")({
 });
 
 function AboutPage() {
+  const reduced = useReducedMotion();
+
   return (
     <SiteLayout>
-      <section className="px-6 pt-40 pb-20 lg:px-10">
-        <div className="mx-auto max-w-[1400px]">
-          <div className="eyebrow text-muted-foreground">— The House</div>
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.1 }}
-            className="mt-6 font-display text-6xl leading-[0.98] lg:text-[10rem]"
-          >
-            A quiet
-            <br />
-            <em>language.</em>
-          </motion.h1>
-        </div>
+      <header className="mx-auto max-w-[1600px] px-6 pb-8 pt-36 lg:px-10 lg:pb-10 lg:pt-40">
+        <p className="look-note">01 · The House</p>
+        <h1 className="mt-4 font-display text-6xl leading-[0.92] tracking-[-0.03em] lg:text-[7.5rem]">
+          A quiet
+          <br />
+          <em>language.</em>
+        </h1>
+      </header>
+
+      <section className="pb-10 lg:px-10 lg:pb-16">
+        <ImagePlate
+          src={images.hero1}
+          alt="Maison Makeeva — a draped silhouette in late light"
+          aspectRatio="16 / 10"
+          objectPosition="50% 18%"
+          priority
+          reveal={!reduced}
+          mark="figure"
+          markReveal="inview"
+          sizes="100vw"
+        />
       </section>
 
-      <section className="mx-auto grid max-w-[1400px] gap-16 px-6 pb-32 lg:grid-cols-12 lg:px-10">
-        <div className="lg:col-span-5">
-          <img src={images.hero1} alt="Maison Makeeva" className="w-full object-cover" />
-        </div>
-        <div className="lg:col-span-7 lg:pt-16">
-          <p className="font-display text-3xl leading-[1.25] lg:text-4xl">
-            Maison Makeeva was founded on a single conviction —{" "}
-            <em>that elegance is a slow thing</em>. A house dedicated to considered design, fluent
-            tailoring, and the quiet pleasure of a well-made garment.
-          </p>
-          <p className="mt-10 text-shadow leading-relaxed">
+      <section className="mx-auto max-w-[1600px] px-6 pb-24 lg:grid lg:grid-cols-12 lg:gap-8 lg:px-10 lg:pb-36">
+        <p className="max-w-xl font-display text-2xl leading-[1.28] lg:col-span-7 lg:col-start-5 lg:text-3xl">
+          Maison Makeeva was founded on a single conviction —{" "}
+          <em>that elegance is a slow thing</em>. A house dedicated to considered design, fluent
+          tailoring, and the quiet pleasure of a well-made garment.
+        </p>
+      </section>
+
+      <section className="mx-auto max-w-[1600px] px-6 pb-28 lg:grid lg:grid-cols-12 lg:gap-10 lg:px-10 lg:pb-40">
+        <div className="lg:col-span-5 lg:pt-4">
+          <p className="text-shadow leading-relaxed">
             Each season is a study, not a statement. Drawn in the studio, cut in the atelier,
             refined again on the body — until only what is necessary remains. Our materials are
             chosen for their honesty: silk crêpe from Como, double-faced wool from Biella, fine
@@ -59,71 +69,106 @@ function AboutPage() {
             work, and the women who wear it.
           </p>
         </div>
-      </section>
-
-      {/* Pillars */}
-      <section className="bg-bone py-32">
-        <div className="mx-auto grid max-w-[1400px] gap-12 px-6 lg:grid-cols-3 lg:px-10">
-          {[
-            {
-              n: "01",
-              t: "Vision",
-              d: "A wardrobe that quietly endures — designed for the woman who already knows herself.",
-            },
-            {
-              n: "02",
-              t: "Craft",
-              d: "Hand-finished in family-run ateliers across Italy. Half-canvas construction, French seams, hand-linked knits.",
-            },
-            {
-              n: "03",
-              t: "Permanence",
-              d: "Heritage pieces — the camel coat, the bias slip, the tailored trouser — re-issued, never replaced.",
-            },
-          ].map((b) => (
-            <div key={b.n} className="border-t border-ink/15 pt-6">
-              <div className="eyebrow text-muted-foreground">— {b.n}</div>
-              <div className="mt-4 font-display text-4xl">{b.t}</div>
-              <p className="mt-4 text-shadow leading-relaxed">{b.d}</p>
-            </div>
-          ))}
+        <div className="mt-16 lg:col-span-6 lg:col-start-7 lg:mt-0 lg:pt-24" aria-hidden>
+          <div className="hairline max-w-xs" />
+          <p className="look-note mt-6">MM · House</p>
         </div>
       </section>
 
-      {/* Atelier */}
-      <section className="grid lg:grid-cols-2">
-        <div className="flex items-center bg-ink px-8 py-24 text-ivory lg:px-20 lg:py-32">
-          <div className="max-w-xl">
-            <div className="eyebrow text-ivory/60">— The Atelier</div>
-            <h2 className="mt-6 font-display text-5xl lg:text-6xl">
-              The hand
-              <br />
-              <em>and the cloth.</em>
-            </h2>
-            <p className="mt-8 text-ivory/75 leading-relaxed">
-              Every Maison Makeeva piece begins on a table in Como, in conversation between a
-              pattern-maker and a length of silk. The hands that finish our garments have spent
-              decades doing only this. We believe that is felt — even when nothing is said.
-            </p>
-          </div>
-        </div>
-        <div className="relative aspect-[4/5] lg:aspect-auto">
-          <img
+      <section className="mx-auto max-w-[1600px] px-6 pb-12 lg:px-10">
+        <p className="look-note">02 · The Hand</p>
+        <h2 className="mt-3 font-display text-4xl leading-[1.05] lg:text-6xl">
+          The hand
+          <br />
+          <em>and the cloth.</em>
+        </h2>
+      </section>
+
+      <section className="mx-auto max-w-[1600px] px-6 pb-10 lg:grid lg:grid-cols-12 lg:px-10 lg:pb-16">
+        <div className="lg:col-span-8 lg:col-start-5">
+          <ImagePlate
             src={images.atelier}
-            alt="Atelier craftsmanship"
-            className="h-full w-full object-cover"
+            alt="Atelier craftsmanship — garments in the house studio"
+            aspectRatio="4 / 5"
+            objectPosition="50% 30%"
+            reveal={!reduced}
+            mark="line"
+            markReveal="inview"
+            sizes="(max-width: 1024px) 100vw, 66vw"
           />
         </div>
       </section>
 
-      {/* Founder */}
-      <section className="mx-auto max-w-3xl px-6 py-32 text-center">
-        <div className="eyebrow text-muted-foreground">— Founder</div>
-        <p className="mt-8 font-display italic text-3xl leading-[1.25] lg:text-4xl">
-          "I wanted to build a house where the garment came first, the conversation second, and the
-          noise — not at all."
+      <section className="mx-auto max-w-[1600px] px-6 pb-28 lg:grid lg:grid-cols-12 lg:px-10 lg:pb-40">
+        <p className="max-w-md text-shadow leading-relaxed lg:col-span-5">
+          Every Maison Makeeva piece begins on a table in Como, in conversation between a
+          pattern-maker and a length of silk. The hands that finish our garments have spent decades
+          doing only this. We believe that is felt — even when nothing is said.
         </p>
-        <div className="mt-8 eyebrow">Anna Makeeva, Founder & Creative Director</div>
+      </section>
+
+      <section className="mx-auto max-w-[1600px] px-6 pb-16 lg:px-10 lg:pb-20">
+        <p className="look-note">03 · The Line</p>
+        <h2 className="mt-3 font-display text-4xl leading-[1.05] lg:text-5xl">House codes</h2>
+      </section>
+
+      <section className="mx-auto max-w-[1600px] px-6 pb-12 lg:grid lg:grid-cols-12 lg:px-10">
+        <div className="lg:col-span-5">
+          <ImagePlate
+            src={images.editorial1}
+            alt="Editorial study — a considered silhouette"
+            aspectRatio="3 / 4"
+            objectPosition="center"
+            reveal={!reduced}
+            mark="circle"
+            markReveal="inview"
+            sizes="(max-width: 1024px) 100vw, 42vw"
+          />
+        </div>
+        <div className="mt-16 flex flex-col gap-14 lg:col-span-6 lg:col-start-7 lg:mt-8 lg:pt-12">
+          <div>
+            <p className="look-note">01 · Vision</p>
+            <h3 className="mt-3 font-display text-3xl">Vision</h3>
+            <p className="mt-4 max-w-sm text-shadow leading-relaxed">
+              A wardrobe that quietly endures — designed for the woman who already knows herself.
+            </p>
+          </div>
+          <div>
+            <p className="look-note">02 · Craft</p>
+            <h3 className="mt-3 font-display text-3xl">Craft</h3>
+            <p className="mt-4 max-w-sm text-shadow leading-relaxed">
+              Hand-finished in family-run ateliers across Italy. Half-canvas construction, French
+              seams, hand-linked knits.
+            </p>
+          </div>
+          <div>
+            <p className="look-note">03 · Permanence</p>
+            <h3 className="mt-3 font-display text-3xl">Permanence</h3>
+            <p className="mt-4 max-w-sm text-shadow leading-relaxed">
+              Heritage pieces — the camel coat, the bias slip, the tailored trouser — re-issued,
+              never replaced.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-[1600px] px-6 py-24 lg:px-10 lg:py-36">
+        <blockquote className="max-w-2xl lg:ml-[18%]">
+          <p className="font-display italic text-3xl leading-[1.25] lg:text-4xl">
+            "I wanted to build a house where the garment came first, the conversation second, and
+            the noise — not at all."
+          </p>
+          <p className="look-note mt-10">Anna Makeeva, Founder & Creative Director</p>
+        </blockquote>
+        <div className="mt-16 lg:ml-[18%]">
+          <Link
+            to="/lookbook"
+            data-cursor="look"
+            className="eyebrow link-underline focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-ink"
+          >
+            View the Lookbook
+          </Link>
+        </div>
       </section>
     </SiteLayout>
   );

@@ -20,4 +20,18 @@ export default defineConfig({
       publicDir: ".vercel/output/static",
     },
   },
+  vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes("node_modules/three")) return "three";
+            if (id.includes("node_modules/@react-three")) return "r3f";
+            if (id.includes("node_modules/lenis")) return "lenis";
+            return undefined;
+          },
+        },
+      },
+    },
+  },
 });
